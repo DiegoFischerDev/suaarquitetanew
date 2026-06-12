@@ -1,18 +1,64 @@
 "use client";
 
 import { GlowSurface } from "@/components/ui/spotlight-card";
+import { useMediaQuery, useMounted } from "@/hooks/use-media-query";
 import { NAV_LINKS, WHATSAPP_LINKS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useHeroReveal } from "./HeroRevealContext";
+
+function NavSurface({
+  children,
+  showSolidNav,
+  useGlow,
+}: {
+  children: ReactNode;
+  showSolidNav: boolean;
+  useGlow: boolean;
+}) {
+  const surfaceClassName = cn(
+    "transition-all duration-700 ease-out",
+    showSolidNav && "border-b border-ink/8 backdrop-blur-md",
+  );
+
+  if (useGlow) {
+    return (
+      <GlowSurface
+        glowColor="sand"
+        glowSize={480}
+        radius={0}
+        border={0}
+        backdrop={
+          showSolidNav
+            ? "color-mix(in srgb, var(--color-cream) 92%, transparent)"
+            : "transparent"
+        }
+        className={surfaceClassName}
+      >
+        {children}
+      </GlowSurface>
+    );
+  }
+
+  return (
+    <div
+      className={cn(surfaceClassName, showSolidNav && "bg-cream/92")}
+    >
+      {children}
+    </div>
+  );
+}
 
 export function Navigation() {
   const { revealComplete, scrollToHeroFullReveal } = useHeroReveal();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const mounted = useMounted();
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const useNavGlow = mounted && isDesktop;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -37,21 +83,7 @@ export function Navigation() {
       )}
       aria-hidden={!revealComplete}
     >
-      <GlowSurface
-        glowColor="sand"
-        glowSize={480}
-        radius={0}
-        border={0}
-        backdrop={
-          showSolidNav
-            ? "color-mix(in srgb, var(--color-cream) 92%, transparent)"
-            : "transparent"
-        }
-        className={cn(
-          "transition-all duration-700 ease-out",
-          showSolidNav && "border-b border-ink/8 backdrop-blur-md",
-        )}
-      >
+      <NavSurface showSolidNav={showSolidNav} useGlow={useNavGlow}>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-brand focus:px-4 focus:py-2 focus:text-cream"
@@ -145,7 +177,7 @@ export function Navigation() {
             </nav>
           </div>
         )}
-      </GlowSurface>
+      </NavSurface>
     </header>
   );
 }

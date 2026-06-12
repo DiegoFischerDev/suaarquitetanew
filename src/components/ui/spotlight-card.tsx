@@ -44,7 +44,14 @@ const sizeMap = {
 };
 
 const pointerGlowCards = new Set<HTMLDivElement>();
+const scrollGlowCards = new Set<HTMLDivElement>();
 let pointerListenerAttached = false;
+let scrollGlowRafId = 0;
+let scrollGlowInfluence = 0;
+let scrollGlowLastY = 0;
+let scrollGlowListenerAttached = false;
+let scrollGlowScrollTimer = 0;
+let scrollGlowPaused = false;
 
 function prefersPointerGlow() {
   return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -95,68 +102,115 @@ function subscribePointerGlow(card: HTMLDivElement) {
   };
 }
 
-function subscribeScrollGlow(card: HTMLDivElement) {
-  let rafId = 0;
-  let lastScrollY = window.scrollY;
-  let scrollInfluence = 0;
+function updateScrollGlowCard(card: HTMLDivElement, time: number) {
+  const rect = card.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
 
-  card.dataset.glowMode = "local";
+  if (rect.bottom < -80 || rect.top > viewportHeight + 80) {
+    return false;
+  }
 
-  const onScroll = () => {
-    const delta = Math.abs(window.scrollY - lastScrollY);
-    lastScrollY = window.scrollY;
-    scrollInfluence = Math.min(1, scrollInfluence + delta * 0.01);
-  };
+  const centerY = rect.top + rect.height * 0.5;
+  const viewportProgress = 1 - Math.min(1, Math.max(0, centerY / viewportHeight));
+  const animationTime = time * 0.00038;
+  const scrollWave = viewportProgress * Math.PI * 2.5;
 
-  window.addEventListener("scroll", onScroll, { passive: true });
+  const localX =
+    0.18 +
+    0.64 *
+      (0.5 + 0.5 * Math.sin(animationTime + scrollWave + scrollGlowInfluence * 2.5));
+  const localY =
+    0.14 +
+    0.72 *
+      (0.5 +
+        0.5 *
+          Math.cos(animationTime * 0.88 + scrollWave * 1.15 + scrollGlowInfluence * 1.8));
 
-  const tick = (time: number) => {
-    scrollInfluence *= 0.9;
+  setGlowPositionLocal(card, localX * 100, localY * 100);
 
-    const rect = card.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const inView = rect.bottom > 0 && rect.top < viewportHeight;
+  const spotOpacity = 0.08 + viewportProgress * 0.05 + scrollGlowInfluence * 0.08;
+  const borderSpotOpacity = 0.55 + scrollGlowInfluence * 0.4;
 
-    if (inView) {
-      const centerY = rect.top + rect.height * 0.5;
-      const viewportProgress = 1 - Math.min(1, Math.max(0, centerY / viewportHeight));
-      const animationTime = time * 0.00038;
-      const scrollWave = viewportProgress * Math.PI * 2.5;
+  card.style.setProperty("--bg-spot-opacity", spotOpacity.toFixed(3));
+  card.style.setProperty("--border-spot-opacity", borderSpotOpacity.toFixed(3));
 
-      const localX =
-        0.18 +
-        0.64 *
-          (0.5 +
-            0.5 * Math.sin(animationTime + scrollWave + scrollInfluence * 2.5));
-      const localY =
-        0.14 +
-        0.72 *
-          (0.5 +
-            0.5 *
-              Math.cos(
-                animationTime * 0.88 + scrollWave * 1.15 + scrollInfluence * 1.8,
-              ));
+  return true;
+}
 
-      setGlowPositionLocal(card, localX * 100, localY * 100);
+function scrollGlowTick(time: number) {
+  scrollGlowInfluence *= 0.9;
 
-      const spotOpacity = 0.08 + viewportProgress * 0.05 + scrollInfluence * 0.08;
-      const borderSpotOpacity = 0.55 + scrollInfluence * 0.4;
-
-      card.style.setProperty("--bg-spot-opacity", spotOpacity.toFixed(3));
-      card.style.setProperty("--border-spot-opacity", borderSpotOpacity.toFixed(3));
+  let anyInView = false;
+  scrollGlowCards.forEach((card) => {
+    if (updateScrollGlowCard(card, time)) {
+      anyInView = true;
     }
+  });
 
-    rafId = window.requestAnimationFrame(tick);
-  };
+  if (
+    scrollGlowCards.size > 0 &&
+    !scrollGlowPaused &&
+    (anyInView || scrollGlowInfluence > 0.02)
+  ) {
+    scrollGlowRafId = window.requestAnimationFrame(scrollGlowTick);
+  } else {
+    scrollGlowRafId = 0;
+  }
+}
 
-  rafId = window.requestAnimationFrame(tick);
+function startScrollGlowLoop() {
+  if (scrollGlowRafId || scrollGlowPaused || scrollGlowCards.size === 0) return;
+  scrollGlowRafId = window.requestAnimationFrame(scrollGlowTick);
+}
+
+function stopScrollGlowLoop() {
+  if (!scrollGlowRafId) return;
+  window.cancelAnimationFrame(scrollGlowRafId);
+  scrollGlowRafId = 0;
+}
+
+function onScrollGlowDocumentScroll() {
+  const delta = Math.abs(window.scrollY - scrollGlowLastY);
+  scrollGlowLastY = window.scrollY;
+  scrollGlowInfluence = Math.min(1, scrollGlowInfluence + delta * 0.01);
+  scrollGlowPaused = true;
+  stopScrollGlowLoop();
+
+  window.clearTimeout(scrollGlowScrollTimer);
+  scrollGlowScrollTimer = window.setTimeout(() => {
+    scrollGlowPaused = false;
+    startScrollGlowLoop();
+  }, 120);
+}
+
+function attachScrollGlowListener() {
+  if (scrollGlowListenerAttached) return;
+  scrollGlowLastY = window.scrollY;
+  window.addEventListener("scroll", onScrollGlowDocumentScroll, { passive: true });
+  scrollGlowListenerAttached = true;
+}
+
+function detachScrollGlowListener() {
+  if (scrollGlowCards.size > 0 || !scrollGlowListenerAttached) return;
+  window.removeEventListener("scroll", onScrollGlowDocumentScroll);
+  window.clearTimeout(scrollGlowScrollTimer);
+  scrollGlowListenerAttached = false;
+  scrollGlowPaused = false;
+  stopScrollGlowLoop();
+}
+
+function subscribeScrollGlow(card: HTMLDivElement) {
+  card.dataset.glowMode = "local";
+  scrollGlowCards.add(card);
+  attachScrollGlowListener();
+  startScrollGlowLoop();
 
   return () => {
-    window.removeEventListener("scroll", onScroll);
-    window.cancelAnimationFrame(rafId);
+    scrollGlowCards.delete(card);
     delete card.dataset.glowMode;
     card.style.removeProperty("--bg-spot-opacity");
     card.style.removeProperty("--border-spot-opacity");
+    detachScrollGlowListener();
   };
 }
 

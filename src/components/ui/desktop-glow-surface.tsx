@@ -1,7 +1,7 @@
 "use client";
 
 import { GlowCard } from "@/components/ui/spotlight-card";
-import { useMounted } from "@/hooks/use-media-query";
+import { useMediaQuery, useMounted } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
@@ -25,20 +25,22 @@ export function DesktopGlowSurface({
   asPlain,
 }: DesktopGlowSurfaceProps) {
   const mounted = useMounted();
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const useGlow = mounted && isDesktop;
 
-  if (!mounted) {
-    return <div className={cn(asPlain, className)}>{children}</div>;
+  if (useGlow) {
+    return (
+      <GlowCard
+        customSize
+        glowColor={glowColor}
+        glowSize={glowSize}
+        backdrop={backdrop}
+        className={className}
+      >
+        {children}
+      </GlowCard>
+    );
   }
 
-  return (
-    <GlowCard
-      customSize
-      glowColor={glowColor}
-      glowSize={glowSize}
-      backdrop={backdrop}
-      className={className}
-    >
-      {children}
-    </GlowCard>
-  );
+  return <div className={cn(asPlain, className)}>{children}</div>;
 }

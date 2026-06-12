@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, type RefObject } from "react";
 
 export interface ImageAutoSliderImage {
   src: string;
@@ -24,6 +24,59 @@ function splitRows(images: ImageAutoSliderImage[]) {
     top: images.slice(0, midpoint),
     bottom: images.slice(midpoint),
   };
+}
+
+function useGalleryScrollOptimization(rootRef: RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    let isVisible = true;
+    let isScrolling = false;
+    let scrollTimer = 0;
+
+    const tracks = () =>
+      root.querySelectorAll<HTMLElement>(".image-auto-slider__track");
+
+    const updatePlayState = () => {
+      const shouldRun = isVisible && !isScrolling;
+      tracks().forEach((track) => {
+        track.style.animationPlayState = shouldRun ? "running" : "paused";
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting && entry.intersectionRatio > 0.08;
+        updatePlayState();
+      },
+      { threshold: [0, 0.08, 0.2, 0.5] },
+    );
+
+    observer.observe(root);
+
+    const onScroll = () => {
+      if (!isScrolling) {
+        isScrolling = true;
+        updatePlayState();
+      }
+
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(() => {
+        isScrolling = false;
+        updatePlayState();
+      }, 100);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    updatePlayState();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(scrollTimer);
+    };
+  }, [rootRef]);
 }
 
 function GalleryCarouselRow({
@@ -76,9 +129,13 @@ interface DualImageCarouselProps {
 
 export function DualImageCarousel({ images, className }: DualImageCarouselProps) {
   const { top, bottom } = useMemo(() => splitRows(images), [images]);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useGalleryScrollOptimization(rootRef);
 
   return (
     <div
+      ref={rootRef}
       className={cn(
         "image-auto-slider relative w-full space-y-3 px-4 py-8 sm:px-6 md:space-y-4",
         className,
