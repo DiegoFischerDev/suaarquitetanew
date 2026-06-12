@@ -59,6 +59,18 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             set -euo pipefail
+            export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
+
+            if ! command -v node >/dev/null 2>&1; then
+              echo "Node.js não encontrado. Rode na VPS: bash deploy/install-app-deps.sh"
+              exit 1
+            fi
+
+            if ! command -v pm2 >/dev/null 2>&1; then
+              npm install -g pm2
+              export PATH="$(npm prefix -g)/bin:$PATH"
+            fi
+
             DEPLOY_PATH="${{ secrets.VPS_DEPLOY_PATH }}"
             mkdir -p "${DEPLOY_PATH}"
             tar -xzf /tmp/release.tar.gz -C "${DEPLOY_PATH}"
@@ -71,5 +83,6 @@ jobs:
               pm2 reload ecosystem.config.cjs --only suaarquiteta --update-env
             else
               pm2 start ecosystem.config.cjs --only suaarquiteta
+              pm2 startup systemd -u root --hp /root || true
             fi
             pm2 save
