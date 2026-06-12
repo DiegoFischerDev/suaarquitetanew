@@ -2,52 +2,106 @@
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useMemo } from "react";
 
 export interface ImageAutoSliderImage {
   src: string;
   alt: string;
 }
 
-interface ImageAutoSliderProps {
+type CarouselDirection = "left" | "right";
+
+interface GalleryCarouselRowProps {
+  images: ImageAutoSliderImage[];
+  direction: CarouselDirection;
+  duration?: number;
+  itemClassName?: string;
+}
+
+function splitRows(images: ImageAutoSliderImage[]) {
+  const midpoint = Math.ceil(images.length / 2);
+  return {
+    top: images.slice(0, midpoint),
+    bottom: images.slice(midpoint),
+  };
+}
+
+function GalleryCarouselRow({
+  images,
+  direction,
+  duration = 32,
+  itemClassName,
+}: GalleryCarouselRowProps) {
+  if (images.length === 0) return null;
+
+  const duplicatedImages = [...images, ...images];
+
+  return (
+    <div className="image-auto-slider__mask w-full overflow-hidden px-2 py-2">
+      <div
+        className={cn(
+          "image-auto-slider__track flex w-max gap-4",
+          direction === "right" && "image-auto-slider__track--reverse",
+        )}
+        style={{ animationDuration: `${duration}s` }}
+      >
+        {duplicatedImages.map((image, index) => (
+          <div
+            key={`${image.src}-${index}`}
+            className={cn(
+              "image-auto-slider__item relative h-44 w-44 shrink-0 overflow-hidden rounded-2xl sm:h-52 sm:w-52 md:h-56 md:w-56 lg:h-60 lg:w-60",
+              itemClassName,
+            )}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 176px, (max-width: 1024px) 208px, 240px"
+              loading="lazy"
+              draggable={false}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+interface DualImageCarouselProps {
   images: ImageAutoSliderImage[];
   className?: string;
 }
 
-export function ImageAutoSlider({ images, className }: ImageAutoSliderProps) {
-  const duplicatedImages = [...images, ...images];
+export function DualImageCarousel({ images, className }: DualImageCarouselProps) {
+  const { top, bottom } = useMemo(() => splitRows(images), [images]);
 
   return (
     <div
       className={cn(
-        "image-auto-slider relative w-full overflow-hidden py-8",
+        "image-auto-slider relative w-full space-y-3 px-4 py-8 sm:px-6 md:space-y-4",
         className,
       )}
     >
-      <div className="image-auto-slider__mask w-full px-2">
-        <div className="image-auto-slider__track flex w-max gap-4">
-          {duplicatedImages.map((image, index) => (
-            <div
-              key={`${image.src}-${index}`}
-              className="image-auto-slider__item relative h-48 w-48 shrink-0 overflow-hidden rounded-2xl shadow-[0_16px_40px_-20px_rgba(26,24,20,0.45)] sm:h-56 sm:w-56"
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 192px, 224px"
-                loading="lazy"
-                draggable={false}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-      <p className="mt-5 text-center text-[10px] font-medium uppercase tracking-[0.28em] text-muted">
+      <GalleryCarouselRow images={top} direction="left" duration={34} />
+      <GalleryCarouselRow images={bottom} direction="right" duration={38} />
+      <p className="mt-4 text-center text-[10px] font-medium uppercase tracking-[0.28em] text-muted">
         Projetos em movimento
       </p>
     </div>
   );
 }
 
-export default ImageAutoSlider;
+/** @deprecated Use DualImageCarousel */
+export function ImageAutoSlider({
+  images,
+  className,
+}: {
+  images: ImageAutoSliderImage[];
+  className?: string;
+}) {
+  return <DualImageCarousel images={images} className={className} />;
+}
+
+export default DualImageCarousel;

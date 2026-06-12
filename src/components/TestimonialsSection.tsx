@@ -1,14 +1,6 @@
+import { TestimonialsDisplay } from "@/components/TestimonialsDisplay";
 import { TestimonialsSeoArchive } from "@/components/TestimonialsSeoArchive";
-import { TestimonialSlider } from "@/components/ui/testimonial-slider";
 import { TESTIMONIALS } from "@/lib/content";
-
-const testimonials = TESTIMONIALS.map((item) => ({
-  image: item.image,
-  quote: item.text,
-  name: item.name,
-  role: item.service,
-  rating: 5,
-}));
 
 export function TestimonialsSection() {
   return (
@@ -19,6 +11,7 @@ export function TestimonialsSection() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto mb-10 max-w-2xl text-center md:mb-14">
+          <p className="eyebrow mb-3">Depoimentos</p>
           <h2
             id="heading-testimonials"
             className="heading-display text-3xl font-medium text-ink md:text-5xl"
@@ -31,7 +24,8 @@ export function TestimonialsSection() {
         </div>
 
         <TestimonialsSeoArchive testimonials={TESTIMONIALS} />
-        <TestimonialSlider testimonials={testimonials} autoplay />
+
+        <TestimonialsDisplay testimonials={TESTIMONIALS} />
       </div>
     </section>
   );

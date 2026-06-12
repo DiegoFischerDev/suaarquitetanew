@@ -1,4 +1,6 @@
 import { ShinyButton } from "@/components/ui/shiny-button";
+import { FooterDeveloperCredit } from "@/components/ui/footer-developer-credit";
+import { FooterSocialGlowLink } from "@/components/ui/footer-social-glow-link";
 import { NAV_LINKS, WHATSAPP_LINKS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Mail } from "lucide-react";
@@ -218,48 +220,41 @@ export function FooterTapedDesign() {
         </div>
 
         <div className="mt-6 flex flex-col items-center justify-between gap-4 px-2 text-center text-sm text-muted md:flex-row md:items-center md:text-left md:px-4">
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-8">
+          <div className="order-2 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-8 md:order-1">
             <p className="max-w-xs sm:max-w-none sm:whitespace-nowrap">
               Agni Garcia Arquitetura {currentYear} © Todos os direitos
               reservados
             </p>
-            <p>
-              Desenvolvido por{" "}
-              <FooterLink
-                href="https://www.linkedin.com/in/diegofischerdev"
-                external
-              >
-                Diego Fischer Dev
-              </FooterLink>
-            </p>
+            <FooterDeveloperCredit />
           </div>
 
-          <div className="flex items-center justify-center gap-4">
-            <a
+          <div className="order-1 flex items-center justify-center gap-4 md:order-2">
+            <FooterSocialGlowLink
               href={WHATSAPP_LINKS.geral}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Falar com a Agni no WhatsApp"
-              className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-brand transition-colors hover:text-brand-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              ariaLabel="Falar com a Agni no WhatsApp"
+              external
+              glowColor="green"
+              iconClassName="text-emerald-800"
             >
               <WhatsAppIcon className="h-5 w-5" />
-            </a>
-            <a
+            </FooterSocialGlowLink>
+            <FooterSocialGlowLink
               href="https://www.instagram.com/sua_arquiteta/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram da Sua Arquiteta"
-              className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-brand transition-colors hover:text-brand-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              ariaLabel="Instagram da Sua Arquiteta"
+              external
+              glowColor="purple"
+              iconClassName="text-fuchsia-800"
             >
               <InstagramIcon className="h-5 w-5" />
-            </a>
-            <a
+            </FooterSocialGlowLink>
+            <FooterSocialGlowLink
               href="mailto:contato@suaarquiteta.com.br"
-              aria-label="Enviar e-mail para contato@suaarquiteta.com.br"
-              className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-brand transition-colors hover:text-brand-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              ariaLabel="Enviar e-mail para contato@suaarquiteta.com.br"
+              glowColor="blue"
+              iconClassName="text-sky-800"
             >
               <Mail className="h-5 w-5" aria-hidden />
-            </a>
+            </FooterSocialGlowLink>
           </div>
         </div>
       </div>

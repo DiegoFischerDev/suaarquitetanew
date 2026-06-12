@@ -1,5 +1,6 @@
 "use client";
 
+import { GlowCard } from "@/components/ui/spotlight-card";
 import { ABOUT } from "@/lib/content";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -30,39 +31,24 @@ export function PresentationBio({ className = "" }: PresentationBioProps) {
     <div className={className}>
       <MotionTag
         {...fadeUp(0, !!reduceMotion)}
-        className="mb-6 space-y-4 border-b border-ink/10 pb-6"
+        className="mt-4 lg:mt-6"
       >
-        <div>
-          <p className="text-lg font-medium text-ink">{ABOUT.name}</p>
-          <p className="mt-0.5 text-sm font-medium tracking-wide text-brand">
-            {ABOUT.role}
-          </p>
-        </div>
-
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
-            Pós Graduada em:
-          </p>
-          <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-ink/85">
-            {ABOUT.postGraduations.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="flex flex-wrap gap-2 pt-1">
+        <div className="flex flex-wrap gap-2">
           {ABOUT.highlights.map((item) => (
-            <span
+            <GlowCard
               key={item}
-              className="rounded-full border border-ink/10 bg-white/70 px-3.5 py-1.5 text-xs font-medium tracking-wide text-ink"
+              customSize
+              glowColor="sand"
+              glowSize={150}
+              className="inline-flex w-auto rounded-full px-3.5 py-1.5 text-xs font-medium tracking-wide text-ink"
             >
               {item}
-            </span>
+            </GlowCard>
           ))}
         </div>
       </MotionTag>
 
-      <div className="space-y-4 text-base leading-relaxed text-muted">
+      <div className="mt-4 space-y-4 text-base leading-relaxed text-muted">
         {ABOUT.bio.map((paragraph, index) => (
           <MotionP key={paragraph.slice(0, 24)} {...fadeUp(index + 1, !!reduceMotion)}>
             {paragraph}

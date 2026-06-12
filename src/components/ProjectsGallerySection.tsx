@@ -11,7 +11,7 @@ export function ProjectsGallerySection() {
       <StickyScrollGallery
         images={PROJECT_GALLERY}
         introTitle="Galeria de projetos"
-        introSubtitle="Residenciais e comerciais desenvolvidos em Recife e em atendimento remoto para todo o Brasil. Role para explorar cada ambiente."
+        introSubtitle="Residenciais e comerciais desenvolvidos em Recife e em atendimento remoto para todo o Brasil."
       />
     </section>
   );

@@ -1,10 +1,10 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { DesktopGlowSurface } from "@/components/ui/desktop-glow-surface";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import { VerticalCutReveal } from "@/components/ui/vertical-cut-reveal";
 import { PLANS, PRICING_COPY } from "@/lib/content";
-import { formatBRL } from "@/lib/utils";
+import { cn, formatBRL } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { useRef } from "react";
 
@@ -86,25 +86,41 @@ export default function PricingSection2() {
                 customVariants={revealVariants}
                 className={`h-full ${featured ? "order-first md:order-none" : ""}`}
               >
-                <Card
-                  className={`flex h-full flex-col p-0 ${
+                <DesktopGlowSurface
+                  glowColor={featured ? "orange" : "sand"}
+                  glowSize={220}
+                  backdrop={
+                    featured
+                      ? "color-mix(in srgb, var(--color-brand) 90%, transparent)"
+                      : undefined
+                  }
+                  className={cn(
+                    "flex h-full flex-col overflow-hidden p-0",
                     featured
                       ? "border-brand bg-brand text-cream shadow-[0_24px_60px_-28px_rgba(26,24,20,0.55)]"
-                      : "border-ink/10 bg-white/80"
-                  }`}
+                      : "border-ink/10 bg-white/80",
+                  )}
+                  asPlain={cn(
+                    "flex h-full flex-col overflow-hidden rounded-2xl border p-0",
+                    featured
+                      ? "border-brand bg-brand text-cream shadow-[0_24px_60px_-28px_rgba(26,24,20,0.55)]"
+                      : "border-ink/10 bg-white/80 shadow-sm",
+                  )}
                 >
-                  <CardHeader
-                    className={`rounded-t-2xl border-b py-5 ${
+                  <div
+                    className={cn(
+                      "rounded-t-2xl border-b px-6 py-5",
                       featured
                         ? "border-cream/15 bg-brand-light"
-                        : "border-ink/8 bg-cream-dark/50"
-                    }`}
+                        : "border-ink/8 bg-cream-dark/50",
+                    )}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <h3
-                        className={`heading-display text-xl font-medium ${
-                          featured ? "text-cream" : "text-ink"
-                        }`}
+                        className={cn(
+                          "heading-display text-xl font-medium",
+                          featured ? "text-cream" : "text-ink",
+                        )}
                       >
                         {plan.title}
                       </h3>
@@ -116,9 +132,10 @@ export default function PricingSection2() {
                     </div>
                     {plan.subtitle && (
                       <p
-                        className={`mt-2 text-xs uppercase tracking-[0.18em] ${
-                          featured ? "text-cream/75" : "text-muted"
-                        }`}
+                        className={cn(
+                          "mt-2 text-xs uppercase tracking-[0.18em]",
+                          featured ? "text-cream/75" : "text-muted",
+                        )}
                       >
                         {plan.subtitle}
                       </p>
@@ -127,46 +144,51 @@ export default function PricingSection2() {
                       {"priceFrom" in plan ? (
                         <>
                           <p
-                            className={`text-xs uppercase tracking-[0.18em] ${
-                              featured ? "text-cream/70" : "text-muted"
-                            }`}
+                            className={cn(
+                              "text-xs uppercase tracking-[0.18em]",
+                              featured ? "text-cream/70" : "text-muted",
+                            )}
                           >
                             A partir de
                           </p>
                           <p
-                            className={`heading-display mt-1 text-2xl font-medium md:text-3xl ${
-                              featured ? "text-cream" : "text-ink"
-                            }`}
+                            className={cn(
+                              "heading-display mt-1 text-2xl font-medium md:text-3xl",
+                              featured ? "text-cream" : "text-ink",
+                            )}
                           >
                             {formatBRL(plan.priceFrom)}
                           </p>
                         </>
                       ) : (
                         <p
-                          className={`heading-display text-xl font-medium md:text-2xl ${
-                            featured ? "text-cream" : "text-ink"
-                          }`}
+                          className={cn(
+                            "heading-display text-xl font-medium md:text-2xl",
+                            featured ? "text-cream" : "text-ink",
+                          )}
                         >
                           Sob consulta
                         </p>
                       )}
                     </div>
-                  </CardHeader>
+                  </div>
 
-                  <CardContent className="flex flex-1 flex-col px-6 pb-6 pt-6">
+                  <div className="flex flex-1 flex-col px-6 pb-6 pt-6">
                     <ul className="mb-6 space-y-2.5 pt-5">
                       {plan.items.map((item, itemIndex) => (
                         <li
                           key={`${plan.id}-${itemIndex}`}
-                          className={`flex items-start gap-2 text-xs leading-relaxed sm:text-sm ${
-                            featured ? "text-cream" : "text-ink/85"
-                          }`}
+                          className={cn(
+                            "flex items-start gap-2 text-xs leading-relaxed sm:text-sm",
+                            featured ? "text-cream" : "text-ink/85",
+                          )}
                         >
                           <Check
                             size={14}
-                            className={`mt-0.5 shrink-0 ${
-                              featured ? "text-cream" : "text-brand"
-                            }`}
+                            className={cn(
+                              "mt-0.5 shrink-0",
+                              featured ? "text-cream" : "text-brand",
+                            )}
                             aria-hidden
                           />
                           <span>{item}</span>
@@ -193,8 +215,8 @@ export default function PricingSection2() {
                         {plan.cta}
                       </a>
                     )}
-                  </CardContent>
-                </Card>
+                  </div>
+                </DesktopGlowSurface>
               </TimelineContent>
             );
           })}

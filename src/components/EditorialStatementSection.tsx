@@ -1,5 +1,5 @@
-import { EDITORIAL_STATEMENT } from "@/lib/content";
-import Image from "next/image";
+import { EditorialStatementImageRotator } from "@/components/EditorialStatementImageRotator";
+import { EDITORIAL_STATEMENT, EDITORIAL_STATEMENT_IMAGES } from "@/lib/content";
 
 export function EditorialStatementSection() {
   return (
@@ -9,16 +9,13 @@ export function EditorialStatementSection() {
       aria-label="Manifesto da Agni Garcia"
     >
       <div className="absolute inset-0 lg:hidden" aria-hidden>
-        <Image
-          src={EDITORIAL_STATEMENT.image}
-          alt=""
-          fill
-          className="object-cover"
+        <EditorialStatementImageRotator
+          images={EDITORIAL_STATEMENT_IMAGES}
           sizes="100vw"
-          loading="lazy"
+          decorative
         />
-        <div className="absolute inset-0 bg-ink/84" />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/50 to-ink/88" />
+        <div className="absolute inset-0 bg-ink/68" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/52 via-ink/32 to-ink/62" />
       </div>
 
       <div className="relative grid lg:min-h-[min(72vh,640px)] lg:grid-cols-2">
@@ -35,13 +32,10 @@ export function EditorialStatementSection() {
         </div>
 
         <div className="relative hidden min-h-0 lg:block">
-          <Image
-            src={EDITORIAL_STATEMENT.image}
-            alt={EDITORIAL_STATEMENT.imageAlt}
-            fill
-            className="object-cover"
+          <EditorialStatementImageRotator
+            images={EDITORIAL_STATEMENT_IMAGES}
             sizes="50vw"
-            loading="lazy"
+            priority
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/35 to-transparent" />
         </div>

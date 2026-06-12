@@ -10,13 +10,13 @@ export function ServicesSpecialtiesGrid() {
         <GlowCard
           key={service.title}
           customSize
-          glowColor="orange"
-          className="h-full p-7"
+          glowColor="sand"
+          className="h-full p-4 md:p-7"
         >
-          <h3 className="text-sm font-semibold tracking-[0.16em] text-brand">
+          <h3 className="text-xs font-semibold tracking-[0.16em] text-brand md:text-sm">
             {service.title}
           </h3>
-          <p className="mt-4 text-sm leading-relaxed text-muted">
+          <p className="mt-4 hidden text-sm leading-relaxed text-muted md:block">
             {service.description}
           </p>
         </GlowCard>

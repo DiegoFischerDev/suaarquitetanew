@@ -1,11 +1,12 @@
 "use client";
 
+import { DesktopGlowSurface } from "@/components/ui/desktop-glow-surface";
 import { FAQ } from "@/lib/content";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 export function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section
@@ -31,7 +32,13 @@ export function FaqSection() {
             const answerId = `faq-answer-${index}`;
 
             return (
-              <div key={item.question} className="card-surface overflow-hidden">
+              <DesktopGlowSurface
+                key={item.question}
+                glowColor="sand"
+                glowSize={200}
+                className="overflow-hidden p-0"
+                asPlain="card-surface overflow-hidden"
+              >
                 <button
                   type="button"
                   id={questionId}
@@ -64,7 +71,7 @@ export function FaqSection() {
                     {item.answer}
                   </p>
                 </div>
-              </div>
+              </DesktopGlowSurface>
             );
           })}
         </div>

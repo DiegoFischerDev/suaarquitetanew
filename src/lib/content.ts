@@ -4,7 +4,7 @@ export const HERO = {
   architectName: "Agni Garcia",
   visualTitle: "Sua Arquiteta",
   visualSubtitle: "Projetamos espaços modernos e eficientes",
-  h1: "Arquitetura a preço popular em Recife. Design de interiores. Alvará de Funcionamento. Móveis Planejados. Projeto de Iluminação. Memorial Descritivo.",
+  h1: "Arquitetura a preço popular em Recife",
   h2: "Você Acaba De Encontrar A Sua Arquiteta!",
   h3: "Projetamos espaços modernos e eficientes",
   projectTypes: ["Residenciais", "Comerciais"] as const,
@@ -331,6 +331,25 @@ export const PROJECT_GALLERY = PROJECT_FILES.map((file, index) => ({
     PROJECT_ALT_BY_FILE[file] ??
     `Projeto de arquitetura ${index + 1 <= 8 ? "comercial" : "residencial"} em Recife — Sua Arquiteta Agni Garcia`,
 }));
+
+const EDITORIAL_IMAGE_FILES = [
+  "32.webp",
+  "ginasio-champagnat-interior.webp",
+  "ginasio-champagnat-fachada.webp",
+  "1.webp",
+  "59.webp",
+  "72.webp",
+  "85.webp",
+  "78.webp",
+] as const satisfies ReadonlyArray<(typeof PROJECT_FILES)[number]>;
+
+export const EDITORIAL_STATEMENT_IMAGES = EDITORIAL_IMAGE_FILES.map((file) => {
+  const image = PROJECT_GALLERY.find((item) => item.src.endsWith(`/${file}`));
+  if (!image) {
+    throw new Error(`Editorial image not found: ${file}`);
+  }
+  return image;
+});
 
 /** @deprecated Use PROJECT_GALLERY */
 export const PROJECT_IMAGES = PROJECT_GALLERY.map((image, index) => ({

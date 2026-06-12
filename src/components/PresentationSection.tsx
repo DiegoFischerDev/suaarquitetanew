@@ -1,6 +1,5 @@
-import expertAgni from "@images/expert-Agni.png";
 import Image from "next/image";
-import { PresentationBio } from "./PresentationBio";
+import { PresentationBody } from "./PresentationBody";
 import { ServicesSpecialtiesGrid } from "./ServicesSpecialtiesGrid";
 import { ServicesSpecialtiesVideo } from "./ServicesSpecialtiesVideo";
 
@@ -27,7 +26,7 @@ export function PresentationSection() {
             />
           </div>
         </div>
-        <div className="relative z-10 mx-auto grid max-w-7xl gap-x-8 gap-y-3 sm:gap-y-4 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-y-12">
+        <div className="relative z-10 mx-auto max-w-7xl">
           <div
             className="pointer-events-none absolute -right-2 top-0 z-[1] h-32 w-32 max-[360px]:h-24 max-[360px]:w-24 sm:-right-4 sm:h-44 sm:w-44 lg:hidden"
             aria-hidden
@@ -41,36 +40,7 @@ export function PresentationSection() {
             />
           </div>
 
-          <div className="relative z-10 lg:col-start-2 lg:row-start-1">
-            <p className="eyebrow mb-3 sm:mb-4">Apresentação</p>
-            <h2
-              id="heading-presentation"
-              className="heading-display text-3xl font-medium leading-tight text-ink md:text-5xl"
-            >
-              Olá, Meu Nome é Agni Garcia,
-              <br />
-              <span className="text-brand">Sua Arquiteta</span>
-            </h2>
-          </div>
-
-          <div className="-mt-1 flex w-full justify-center sm:-mt-2 lg:col-start-1 lg:row-start-1 lg:row-span-2 lg:mt-0 lg:block lg:self-center">
-            <div className="relative mx-auto w-full max-w-xs sm:max-w-sm lg:max-w-none">
-              <div className="relative z-10 mx-auto h-[min(48vh,360px)] w-full lg:mx-0 lg:h-[min(90vh,760px)]">
-                <Image
-                  src={expertAgni}
-                  alt="Agni Garcia, arquiteta em Recife"
-                  fill
-                  className="object-contain object-bottom"
-                  sizes="(max-width: 640px) 320px, (max-width: 1024px) 384px, 480px"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="relative z-10 max-w-xl lg:col-start-2 lg:row-start-2 lg:mt-6">
-            <PresentationBio />
-          </div>
+          <PresentationBody />
         </div>
       </section>
 
