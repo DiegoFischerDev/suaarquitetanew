@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /secreto/
+Sitemap: https://www.suaarquiteta.com.br/sitemap.xml

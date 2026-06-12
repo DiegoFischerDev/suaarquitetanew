@@ -1,0 +1,14 @@
+{
+  "name": "Sua Arquiteta Recife",
+  "short_name": "Sua Arquiteta",
+  "theme_color": "#3D3834",
+  "background_color": "#3D3834",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/assets/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
