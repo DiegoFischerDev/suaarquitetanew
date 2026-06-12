@@ -86,21 +86,55 @@ function subscribePointerGlow(card: HTMLDivElement) {
 
 function subscribeScrollGlow(card: HTMLDivElement) {
   let rafId = 0;
+  let lastScrollY = window.scrollY;
+  let scrollInfluence = 0;
 
-  const tick = () => {
+  const onScroll = () => {
+    const delta = Math.abs(window.scrollY - lastScrollY);
+    lastScrollY = window.scrollY;
+    scrollInfluence = Math.min(1, scrollInfluence + delta * 0.01);
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  const tick = (time: number) => {
+    scrollInfluence *= 0.9;
+
     const rect = card.getBoundingClientRect();
-    const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+    const viewportHeight = window.innerHeight;
+    const inView = rect.bottom > 0 && rect.top < viewportHeight;
 
     if (inView) {
-      const scrollInfluence = 1 - Math.min(1, Math.max(0, rect.top / window.innerHeight));
-      const t = performance.now() * 0.00035;
-      const localX = 0.22 + 0.56 * Math.sin(t + scrollInfluence * Math.PI);
-      const localY = 0.2 + 0.6 * Math.cos(t * 0.82 + scrollInfluence * 1.35);
+      const centerY = rect.top + rect.height * 0.5;
+      const viewportProgress = 1 - Math.min(1, Math.max(0, centerY / viewportHeight));
+      const animationTime = time * 0.00038;
+      const scrollWave = viewportProgress * Math.PI * 2.5;
+
+      const localX =
+        0.18 +
+        0.64 *
+          (0.5 +
+            0.5 * Math.sin(animationTime + scrollWave + scrollInfluence * 2.5));
+      const localY =
+        0.14 +
+        0.72 *
+          (0.5 +
+            0.5 *
+              Math.cos(
+                animationTime * 0.88 + scrollWave * 1.15 + scrollInfluence * 1.8,
+              ));
+
       setGlowPosition(
         card,
         rect.left + rect.width * localX,
         rect.top + rect.height * localY,
       );
+
+      const spotOpacity = 0.08 + viewportProgress * 0.05 + scrollInfluence * 0.08;
+      const borderSpotOpacity = 0.55 + scrollInfluence * 0.4;
+
+      card.style.setProperty("--bg-spot-opacity", spotOpacity.toFixed(3));
+      card.style.setProperty("--border-spot-opacity", borderSpotOpacity.toFixed(3));
     }
 
     rafId = window.requestAnimationFrame(tick);
@@ -109,7 +143,10 @@ function subscribeScrollGlow(card: HTMLDivElement) {
   rafId = window.requestAnimationFrame(tick);
 
   return () => {
+    window.removeEventListener("scroll", onScroll);
     window.cancelAnimationFrame(rafId);
+    card.style.removeProperty("--bg-spot-opacity");
+    card.style.removeProperty("--border-spot-opacity");
   };
 }
 

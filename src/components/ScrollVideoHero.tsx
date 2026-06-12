@@ -17,7 +17,13 @@ import { useHeroReveal } from "./HeroRevealContext";
 const SCROLL_HEIGHT = "290vh";
 const DESKTOP_MEDIA_QUERY = "(min-width: 1024px)";
 const INITIAL_MOBILE_REVEAL = 0.5;
+const MOBILE_REVEAL_MIN = 0.1;
+const MOBILE_REVEAL_MAX = 0.9;
 const MOBILE_INTRO_EASE = [0.22, 1, 0.36, 1] as const;
+
+function clampMobileReveal(progress: number) {
+  return Math.max(MOBILE_REVEAL_MIN, Math.min(MOBILE_REVEAL_MAX, progress));
+}
 
 function clipPathFromProgress(progress: number) {
   return `inset(0 ${(1 - progress) * 100}% 0 0)`;
@@ -62,7 +68,7 @@ export function ScrollVideoHero() {
     if (!hero) return;
 
     const { left, width } = hero.getBoundingClientRect();
-    const progress = Math.max(0, Math.min(1, (clientX - left) / width));
+    const progress = clampMobileReveal((clientX - left) / width);
     setMobileReveal(progress);
   }, []);
 
@@ -122,13 +128,13 @@ export function ScrollVideoHero() {
           },
         });
 
-      await animateReveal(INITIAL_MOBILE_REVEAL, 1, 1.35);
+      await animateReveal(INITIAL_MOBILE_REVEAL, MOBILE_REVEAL_MAX, 1.35);
       if (cancelled) return;
 
       await wait(450);
       if (cancelled) return;
 
-      await animateReveal(1, INITIAL_MOBILE_REVEAL, 1.15);
+      await animateReveal(MOBILE_REVEAL_MAX, INITIAL_MOBILE_REVEAL, 1.15);
       if (cancelled) return;
 
       draggingRef.current = false;
@@ -178,7 +184,7 @@ export function ScrollVideoHero() {
       }
 
       window.scrollTo({ top: hero.offsetTop, behavior: "smooth" });
-      setMobileReveal(1);
+      setMobileReveal(MOBILE_REVEAL_MAX);
     };
 
     registerScrollToFullReveal(scrollToFullReveal);
@@ -262,8 +268,8 @@ export function ScrollVideoHero() {
                 onPointerCancel={handleMobilePointerUp}
                 role="slider"
                 aria-label="Comparar antes e depois do projeto"
-                aria-valuemin={0}
-                aria-valuemax={100}
+                aria-valuemin={MOBILE_REVEAL_MIN * 100}
+                aria-valuemax={MOBILE_REVEAL_MAX * 100}
                 aria-valuenow={Math.round(mobileReveal * 100)}
               >
                 <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-cream/90 shadow-[0_0_24px_rgba(249,248,243,0.65)]" />
