@@ -1,7 +1,7 @@
 "use client";
 
 import { GlowSurface } from "@/components/ui/spotlight-card";
-import { useMounted } from "@/hooks/use-media-query";
+import { useMediaQuery, useMounted } from "@/hooks/use-media-query";
 import { NAV_LINKS, WHATSAPP_LINKS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
@@ -14,10 +14,12 @@ function NavSurface({
   children,
   showSolidNav,
   useGlow,
+  isDesktop,
 }: {
   children: ReactNode;
   showSolidNav: boolean;
   useGlow: boolean;
+  isDesktop: boolean;
 }) {
   const surfaceClassName = cn(
     "transition-all duration-700 ease-out",
@@ -28,7 +30,8 @@ function NavSurface({
     return (
       <GlowSurface
         glowColor="sand"
-        glowSize={480}
+        glowSize={isDesktop ? 480 : 260}
+        soft={!isDesktop}
         radius={0}
         border={0}
         backdrop={
@@ -57,6 +60,7 @@ export function Navigation() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const mounted = useMounted();
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
   const useNavGlow = mounted;
 
   useEffect(() => {
@@ -82,7 +86,11 @@ export function Navigation() {
       )}
       aria-hidden={!revealComplete}
     >
-      <NavSurface showSolidNav={showSolidNav} useGlow={useNavGlow}>
+      <NavSurface
+        showSolidNav={showSolidNav}
+        useGlow={useNavGlow}
+        isDesktop={isDesktop}
+      >
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-brand focus:px-4 focus:py-2 focus:text-cream"

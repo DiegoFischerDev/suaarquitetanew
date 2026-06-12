@@ -1,18 +1,6 @@
 "use client";
 
 import { DualImageCarousel } from "@/components/ui/image-auto-slider";
-import { useEffect, useState } from "react";
-
-function shuffleGallery<T>(items: T[]): T[] {
-  const copy = [...items];
-
-  for (let i = copy.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-
-  return copy;
-}
 
 export interface GalleryImage {
   src: string;
@@ -20,7 +8,7 @@ export interface GalleryImage {
 }
 
 interface StickyScrollGalleryProps {
-  images: GalleryImage[];
+  images: readonly GalleryImage[];
   introTitle: string;
   introSubtitle: string;
 }
@@ -54,16 +42,10 @@ export function StickyScrollGallery({
   introTitle,
   introSubtitle,
 }: StickyScrollGalleryProps) {
-  const [galleryImages, setGalleryImages] = useState(images);
-
-  useEffect(() => {
-    setGalleryImages(shuffleGallery(images));
-  }, [images]);
-
   return (
     <div className="w-full">
       <GalleryIntro introTitle={introTitle} introSubtitle={introSubtitle} />
-      <DualImageCarousel images={galleryImages} className="pb-12" />
+      <DualImageCarousel images={images} className="pb-12" />
     </div>
   );
 }

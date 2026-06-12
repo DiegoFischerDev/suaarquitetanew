@@ -21,6 +21,8 @@ interface GlowSurfaceProps {
   soft?: boolean;
   width?: string | number;
   height?: string | number;
+  hueBase?: number;
+  hueSpread?: number;
 }
 
 interface GlowCardProps extends GlowSurfaceProps {
@@ -110,24 +112,28 @@ function updateScrollGlowCard(card: HTMLDivElement, time: number) {
 
   const centerY = rect.top + rect.height * 0.5;
   const viewportProgress = 1 - Math.min(1, Math.max(0, centerY / viewportHeight));
-  const animationTime = time * 0.00038;
-  const scrollWave = viewportProgress * Math.PI * 2.5;
+  const isSoft = card.hasAttribute("data-glow-soft");
+  const animationTime = time * (isSoft ? 0.00022 : 0.00038);
+  const scrollWave = viewportProgress * Math.PI * (isSoft ? 1.6 : 2.5);
+  const influenceBoost = scrollGlowInfluence * (isSoft ? 1.2 : 2.5);
 
   const localX =
     0.18 +
-    0.64 *
-      (0.5 + 0.5 * Math.sin(animationTime + scrollWave + scrollGlowInfluence * 2.5));
+    0.64 * (0.5 + 0.5 * Math.sin(animationTime + scrollWave + influenceBoost));
   const localY =
     0.14 +
     0.72 *
       (0.5 +
-        0.5 *
-          Math.cos(animationTime * 0.88 + scrollWave * 1.15 + scrollGlowInfluence * 1.8));
+        0.5 * Math.cos(animationTime * 0.88 + scrollWave * 1.15 + influenceBoost * 0.72));
 
   setGlowPositionLocal(card, localX * 100, localY * 100);
 
-  const spotOpacity = 0.08 + viewportProgress * 0.05 + scrollGlowInfluence * 0.08;
-  const borderSpotOpacity = 0.55 + scrollGlowInfluence * 0.4;
+  const spotOpacity =
+    (isSoft ? 0.032 : 0.08) +
+    viewportProgress * (isSoft ? 0.025 : 0.05) +
+    scrollGlowInfluence * (isSoft ? 0.035 : 0.08);
+  const borderSpotOpacity =
+    (isSoft ? 0.24 : 0.55) + scrollGlowInfluence * (isSoft ? 0.15 : 0.4);
 
   card.style.setProperty("--bg-spot-opacity", spotOpacity.toFixed(3));
   card.style.setProperty("--border-spot-opacity", borderSpotOpacity.toFixed(3));
@@ -212,6 +218,8 @@ function buildGlowStyles({
   soft = false,
   width,
   height,
+  hueBase,
+  hueSpread,
 }: {
   glowColor: GlowColor;
   glowSize: number;
@@ -221,11 +229,15 @@ function buildGlowStyles({
   soft?: boolean;
   width?: string | number;
   height?: string | number;
+  hueBase?: number;
+  hueSpread?: number;
 }): CSSProperties & Record<string, string | number> {
   const { base, spread } = glowColorMap[glowColor];
+  const resolvedBase = hueBase ?? base;
+  const resolvedSpread = hueSpread ?? spread;
   const styles: CSSProperties & Record<string, string | number> = {
-    "--base": base,
-    "--spread": soft ? spread * 0.55 : spread,
+    "--base": resolvedBase,
+    "--spread": soft ? resolvedSpread * 0.55 : resolvedSpread,
     "--radius": radius,
     "--border": border,
     "--backdrop": backdrop,
@@ -270,6 +282,8 @@ function GlowSurface({
   soft = false,
   width,
   height,
+  hueBase,
+  hueSpread,
 }: GlowSurfaceProps) {
   const surfaceRef = useRef<HTMLDivElement>(null);
 
@@ -308,6 +322,8 @@ function GlowSurface({
         soft,
         width,
         height,
+        hueBase,
+        hueSpread,
       })}
       className={className}
     >
@@ -330,6 +346,8 @@ function GlowCard({
   width,
   height,
   customSize = false,
+  hueBase,
+  hueSpread,
 }: GlowCardProps) {
   return (
     <GlowSurface
@@ -341,6 +359,8 @@ function GlowCard({
       soft={soft}
       width={width}
       height={height}
+      hueBase={hueBase}
+      hueSpread={hueSpread}
       className={cn(
         !customSize && sizeMap[size],
         !customSize && "aspect-[3/4]",

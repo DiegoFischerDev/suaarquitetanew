@@ -234,7 +234,6 @@ export function FooterTapedDesign() {
               ariaLabel="Falar com a Agni no WhatsApp"
               external
               glowColor="green"
-              iconClassName="text-emerald-800"
             >
               <WhatsAppIcon className="h-5 w-5" />
             </FooterSocialGlowLink>
@@ -243,7 +242,6 @@ export function FooterTapedDesign() {
               ariaLabel="Instagram da Sua Arquiteta"
               external
               glowColor="purple"
-              iconClassName="text-fuchsia-800"
             >
               <InstagramIcon className="h-5 w-5" />
             </FooterSocialGlowLink>
@@ -251,7 +249,6 @@ export function FooterTapedDesign() {
               href="mailto:contato@suaarquiteta.com.br"
               ariaLabel="Enviar e-mail para contato@suaarquiteta.com.br"
               glowColor="blue"
-              iconClassName="text-sky-800"
             >
               <Mail className="h-5 w-5" aria-hidden />
             </FooterSocialGlowLink>
