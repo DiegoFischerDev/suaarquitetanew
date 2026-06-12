@@ -1,6 +1,6 @@
 # VPS com vários projetos — organização
 
-Este servidor já hospeda outros sites. O **suaarquiteta** foi configurado para **não misturar** com eles.
+Este servidor já hospeda outros sites. O **suaarquiteta** foi configurado para **não misturar** com eles
 
 ---
 
