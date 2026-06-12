@@ -1,4 +1,4 @@
-export const SITE_URL = "https://www.suaarquiteta.com.br";
+export const SITE_URL = "https://suaarquiteta.com";
 
 export const WHATSAPP_NUMBER = "5581996686852";
 
