@@ -33,8 +33,8 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
       <DesktopGlowSurface
         glowColor="sand"
         glowSize={200}
-        className="flex h-full flex-col overflow-hidden p-0 border-ink/10 bg-white/80"
-        asPlain="flex h-full flex-col overflow-hidden rounded-2xl border border-ink/10 bg-white/80 p-0 shadow-sm"
+        className="flex h-full flex-col p-0 border-ink/10 bg-white/80"
+        asPlain="flex h-full flex-col rounded-2xl border border-ink/10 bg-white/80 p-0 shadow-sm"
       >
         <div
           ref={ref}

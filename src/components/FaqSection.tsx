@@ -36,8 +36,8 @@ export function FaqSection() {
                 key={item.question}
                 glowColor="sand"
                 glowSize={200}
-                className="overflow-hidden p-0"
-                asPlain="card-surface overflow-hidden"
+                className="p-0"
+                asPlain="card-surface"
               >
                 <button
                   type="button"

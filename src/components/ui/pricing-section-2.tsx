@@ -95,13 +95,13 @@ export default function PricingSection2() {
                       : undefined
                   }
                   className={cn(
-                    "flex h-full flex-col overflow-hidden p-0",
+                    "flex h-full flex-col p-0",
                     featured
                       ? "border-brand bg-brand text-cream shadow-[0_24px_60px_-28px_rgba(26,24,20,0.55)]"
                       : "border-ink/10 bg-white/80",
                   )}
                   asPlain={cn(
-                    "flex h-full flex-col overflow-hidden rounded-2xl border p-0",
+                    "flex h-full flex-col rounded-2xl border p-0",
                     featured
                       ? "border-brand bg-brand text-cream shadow-[0_24px_60px_-28px_rgba(26,24,20,0.55)]"
                       : "border-ink/10 bg-white/80 shadow-sm",

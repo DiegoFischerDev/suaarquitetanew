@@ -50,16 +50,25 @@ function prefersPointerGlow() {
   return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 }
 
-function setGlowPosition(card: HTMLDivElement, x: number, y: number) {
+function setGlowPositionFixed(card: HTMLDivElement, x: number, y: number) {
+  card.dataset.glowMode = "fixed";
   card.style.setProperty("--x", x.toFixed(2));
   card.style.setProperty("--y", y.toFixed(2));
   card.style.setProperty("--xp", (x / window.innerWidth).toFixed(2));
   card.style.setProperty("--yp", (y / window.innerHeight).toFixed(2));
 }
 
+function setGlowPositionLocal(card: HTMLDivElement, xPercent: number, yPercent: number) {
+  card.dataset.glowMode = "local";
+  card.style.setProperty("--x", xPercent.toFixed(2));
+  card.style.setProperty("--y", yPercent.toFixed(2));
+  card.style.setProperty("--xp", (xPercent / 100).toFixed(2));
+  card.style.setProperty("--yp", (yPercent / 100).toFixed(2));
+}
+
 function syncPointerGlowCards(event: PointerEvent) {
   const { clientX: x, clientY: y } = event;
-  pointerGlowCards.forEach((card) => setGlowPosition(card, x, y));
+  pointerGlowCards.forEach((card) => setGlowPositionFixed(card, x, y));
 }
 
 function attachPointerListener() {
@@ -76,10 +85,12 @@ function detachPointerListener() {
 
 function subscribePointerGlow(card: HTMLDivElement) {
   pointerGlowCards.add(card);
+  setGlowPositionFixed(card, window.innerWidth / 2, window.innerHeight / 2);
   attachPointerListener();
 
   return () => {
     pointerGlowCards.delete(card);
+    delete card.dataset.glowMode;
     detachPointerListener();
   };
 }
@@ -88,6 +99,8 @@ function subscribeScrollGlow(card: HTMLDivElement) {
   let rafId = 0;
   let lastScrollY = window.scrollY;
   let scrollInfluence = 0;
+
+  card.dataset.glowMode = "local";
 
   const onScroll = () => {
     const delta = Math.abs(window.scrollY - lastScrollY);
@@ -124,11 +137,7 @@ function subscribeScrollGlow(card: HTMLDivElement) {
                 animationTime * 0.88 + scrollWave * 1.15 + scrollInfluence * 1.8,
               ));
 
-      setGlowPosition(
-        card,
-        rect.left + rect.width * localX,
-        rect.top + rect.height * localY,
-      );
+      setGlowPositionLocal(card, localX * 100, localY * 100);
 
       const spotOpacity = 0.08 + viewportProgress * 0.05 + scrollInfluence * 0.08;
       const borderSpotOpacity = 0.55 + scrollInfluence * 0.4;
@@ -145,6 +154,7 @@ function subscribeScrollGlow(card: HTMLDivElement) {
   return () => {
     window.removeEventListener("scroll", onScroll);
     window.cancelAnimationFrame(rafId);
+    delete card.dataset.glowMode;
     card.style.removeProperty("--bg-spot-opacity");
     card.style.removeProperty("--border-spot-opacity");
   };
@@ -194,17 +204,10 @@ function buildGlowStyles({
     "--border-size": "calc(var(--border, 2) * 1px)",
     "--spotlight-size": "calc(var(--size, 150) * 1px)",
     "--hue": "calc(var(--base) + (var(--xp, 0) * var(--spread, 0)))",
-    backgroundImage: `radial-gradient(
-        var(--spotlight-size) var(--spotlight-size) at
-        calc(var(--x, 0) * 1px)
-        calc(var(--y, 0) * 1px),
-        hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.1)), transparent
-      )`,
     backgroundColor: "var(--backdrop, transparent)",
     backgroundSize:
       "calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)))",
     backgroundPosition: "50% 50%",
-    backgroundAttachment: "fixed",
     border: "var(--border-size) solid var(--backup-border)",
     position: "relative",
     isolation: "isolate",
@@ -258,6 +261,7 @@ function GlowSurface({
     <div
       ref={surfaceRef}
       data-glow
+      data-glow-mode="fixed"
       data-glow-soft={soft ? "" : undefined}
       style={buildGlowStyles({
         glowColor,
