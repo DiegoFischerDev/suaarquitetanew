@@ -50,8 +50,6 @@ let scrollGlowRafId = 0;
 let scrollGlowInfluence = 0;
 let scrollGlowLastY = 0;
 let scrollGlowListenerAttached = false;
-let scrollGlowScrollTimer = 0;
-let scrollGlowPaused = false;
 
 function prefersPointerGlow() {
   return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -147,11 +145,7 @@ function scrollGlowTick(time: number) {
     }
   });
 
-  if (
-    scrollGlowCards.size > 0 &&
-    !scrollGlowPaused &&
-    (anyInView || scrollGlowInfluence > 0.02)
-  ) {
+  if (scrollGlowCards.size > 0 && (anyInView || scrollGlowInfluence > 0.02)) {
     scrollGlowRafId = window.requestAnimationFrame(scrollGlowTick);
   } else {
     scrollGlowRafId = 0;
@@ -159,28 +153,15 @@ function scrollGlowTick(time: number) {
 }
 
 function startScrollGlowLoop() {
-  if (scrollGlowRafId || scrollGlowPaused || scrollGlowCards.size === 0) return;
+  if (scrollGlowRafId || scrollGlowCards.size === 0) return;
   scrollGlowRafId = window.requestAnimationFrame(scrollGlowTick);
-}
-
-function stopScrollGlowLoop() {
-  if (!scrollGlowRafId) return;
-  window.cancelAnimationFrame(scrollGlowRafId);
-  scrollGlowRafId = 0;
 }
 
 function onScrollGlowDocumentScroll() {
   const delta = Math.abs(window.scrollY - scrollGlowLastY);
   scrollGlowLastY = window.scrollY;
   scrollGlowInfluence = Math.min(1, scrollGlowInfluence + delta * 0.01);
-  scrollGlowPaused = true;
-  stopScrollGlowLoop();
-
-  window.clearTimeout(scrollGlowScrollTimer);
-  scrollGlowScrollTimer = window.setTimeout(() => {
-    scrollGlowPaused = false;
-    startScrollGlowLoop();
-  }, 120);
+  startScrollGlowLoop();
 }
 
 function attachScrollGlowListener() {
@@ -193,10 +174,11 @@ function attachScrollGlowListener() {
 function detachScrollGlowListener() {
   if (scrollGlowCards.size > 0 || !scrollGlowListenerAttached) return;
   window.removeEventListener("scroll", onScrollGlowDocumentScroll);
-  window.clearTimeout(scrollGlowScrollTimer);
   scrollGlowListenerAttached = false;
-  scrollGlowPaused = false;
-  stopScrollGlowLoop();
+  if (scrollGlowRafId) {
+    window.cancelAnimationFrame(scrollGlowRafId);
+    scrollGlowRafId = 0;
+  }
 }
 
 function subscribeScrollGlow(card: HTMLDivElement) {

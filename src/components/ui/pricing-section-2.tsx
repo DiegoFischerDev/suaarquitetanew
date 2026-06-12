@@ -86,21 +86,8 @@ export default function PricingSection2() {
                 customVariants={revealVariants}
                 className={`h-full ${featured ? "order-first md:order-none" : ""}`}
               >
-                <DesktopGlowSurface
-                  glowColor={featured ? "orange" : "sand"}
-                  glowSize={220}
-                  backdrop={
-                    featured
-                      ? "color-mix(in srgb, var(--color-brand) 90%, transparent)"
-                      : undefined
-                  }
+                <div
                   className={cn(
-                    "flex h-full flex-col p-0",
-                    featured
-                      ? "border-brand bg-brand text-cream shadow-[0_24px_60px_-28px_rgba(26,24,20,0.55)]"
-                      : "border-ink/10 bg-white/80",
-                  )}
-                  asPlain={cn(
                     "flex h-full flex-col rounded-2xl border p-0",
                     featured
                       ? "border-brand bg-brand text-cream shadow-[0_24px_60px_-28px_rgba(26,24,20,0.55)]"
@@ -196,27 +183,42 @@ export default function PricingSection2() {
                       ))}
                     </ul>
 
-                    {featured ? (
-                      <a
-                        href={plan.whatsapp}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-auto inline-flex w-full cursor-pointer items-center justify-center rounded-full bg-cream px-7 py-3.5 text-sm font-medium tracking-wide text-ink transition-all duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-                      >
-                        {plan.cta}
-                      </a>
-                    ) : (
-                      <a
-                        href={plan.whatsapp}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-primary mt-auto w-full"
-                      >
-                        {plan.cta}
-                      </a>
-                    )}
+                    <DesktopGlowSurface
+                      mobileGlow
+                      glowColor={featured ? "orange" : "sand"}
+                      glowSize={160}
+                      radius={999}
+                      border={2}
+                      backdrop={
+                        featured
+                          ? "color-mix(in srgb, var(--color-cream) 96%, transparent)"
+                          : "color-mix(in srgb, var(--color-brand) 92%, transparent)"
+                      }
+                      className="mt-auto h-auto w-full max-w-full shrink-0 flex-row items-stretch gap-0 rounded-full p-0 shadow-none backdrop-blur-none"
+                      asPlain="mt-auto block w-full"
+                    >
+                      {featured ? (
+                        <a
+                          href={plan.whatsapp}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative z-10 inline-flex w-full cursor-pointer items-center justify-center rounded-full bg-cream px-7 py-3.5 text-sm font-medium tracking-wide text-ink transition-all duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                        >
+                          {plan.cta}
+                        </a>
+                      ) : (
+                        <a
+                          href={plan.whatsapp}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-primary relative z-10 w-full"
+                        >
+                          {plan.cta}
+                        </a>
+                      )}
+                    </DesktopGlowSurface>
                   </div>
-                </DesktopGlowSurface>
+                </div>
               </TimelineContent>
             );
           })}

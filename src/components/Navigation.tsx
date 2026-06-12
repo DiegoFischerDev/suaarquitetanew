@@ -1,7 +1,7 @@
 "use client";
 
 import { GlowSurface } from "@/components/ui/spotlight-card";
-import { useMediaQuery, useMounted } from "@/hooks/use-media-query";
+import { useMounted } from "@/hooks/use-media-query";
 import { NAV_LINKS, WHATSAPP_LINKS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
@@ -57,8 +57,7 @@ export function Navigation() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const mounted = useMounted();
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
-  const useNavGlow = mounted && isDesktop;
+  const useNavGlow = mounted;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);

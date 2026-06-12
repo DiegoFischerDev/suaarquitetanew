@@ -14,6 +14,10 @@ type DesktopGlowSurfaceProps = {
   glowSize?: number;
   backdrop?: string;
   asPlain?: string;
+  /** Habilita glow no mobile; padrão só desktop (≥1024px). */
+  mobileGlow?: boolean;
+  radius?: number;
+  border?: number;
 };
 
 export function DesktopGlowSurface({
@@ -23,10 +27,13 @@ export function DesktopGlowSurface({
   glowSize = 200,
   backdrop,
   asPlain,
+  mobileGlow = false,
+  radius,
+  border,
 }: DesktopGlowSurfaceProps) {
   const mounted = useMounted();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
-  const useGlow = mounted && isDesktop;
+  const useGlow = mounted && (isDesktop || mobileGlow);
 
   if (useGlow) {
     return (
@@ -35,6 +42,8 @@ export function DesktopGlowSurface({
         glowColor={glowColor}
         glowSize={glowSize}
         backdrop={backdrop}
+        radius={radius}
+        border={border}
         className={className}
       >
         {children}

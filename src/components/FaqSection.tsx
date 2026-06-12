@@ -34,6 +34,7 @@ export function FaqSection() {
             return (
               <DesktopGlowSurface
                 key={item.question}
+                mobileGlow
                 glowColor="sand"
                 glowSize={200}
                 className="p-0"
