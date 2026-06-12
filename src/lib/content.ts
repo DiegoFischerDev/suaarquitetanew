@@ -115,7 +115,6 @@ export const PLANS = [
     id: "arquitetonico",
     title: "Projeto Arquitetônico",
     subtitle: "Residencial ou Comercial",
-    priceFrom: 2990,
     items: [
       "CONSULTORIA",
       "ATENDIMENTO VIA WHATSAPP",
@@ -133,7 +132,6 @@ export const PLANS = [
     id: "interiores",
     title: "Design de Interiores",
     subtitle: "Residencial ou Comercial",
-    priceFrom: 2490,
     items: [
       "CONSULTORIA",
       "ATENDIMENTO VIA WHATSAPP",
@@ -147,14 +145,13 @@ export const PLANS = [
       "PLANTA DE FORRO DE GESSO",
       "DETALHAMENTOS DO MOBILIÁRIO",
     ],
-    cta: "Quero conversar",
+    cta: "Saiba mais",
     whatsapp: WHATSAPP_LINKS.interiores,
   },
   {
     id: "legalizacao",
     title: "Serviços de Legalização",
     subtitle: undefined,
-    priceFrom: 1990,
     items: [
       "CONSULTORIA",
       "ATENDIMENTO VIA WHATSAPP",

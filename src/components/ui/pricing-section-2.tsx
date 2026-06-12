@@ -4,7 +4,7 @@ import { DesktopGlowSurface } from "@/components/ui/desktop-glow-surface";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import { VerticalCutReveal } from "@/components/ui/vertical-cut-reveal";
 import { PLANS, PRICING_COPY } from "@/lib/content";
-import { cn, formatBRL } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useRef } from "react";
 
 const FEATURED_PLAN_ID = "interiores";
@@ -130,37 +130,6 @@ export default function PricingSection2() {
                         {plan.subtitle}
                       </p>
                     )}
-                    <div className="mt-4">
-                      {"priceFrom" in plan ? (
-                        <>
-                          <p
-                            className={cn(
-                              "text-xs uppercase tracking-[0.18em]",
-                              featured ? "text-cream/70" : "text-muted",
-                            )}
-                          >
-                            A partir de
-                          </p>
-                          <p
-                            className={cn(
-                              "heading-display mt-1 text-2xl font-medium md:text-3xl",
-                              featured ? "text-cream" : "text-ink",
-                            )}
-                          >
-                            {formatBRL(plan.priceFrom)}
-                          </p>
-                        </>
-                      ) : (
-                        <p
-                          className={cn(
-                            "heading-display text-xl font-medium md:text-2xl",
-                            featured ? "text-cream" : "text-ink",
-                          )}
-                        >
-                          Sob consulta
-                        </p>
-                      )}
-                    </div>
                   </div>
 
                   <div className="flex flex-1 flex-col px-6 pb-6 pt-6">
