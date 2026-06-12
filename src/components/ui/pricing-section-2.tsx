@@ -5,7 +5,6 @@ import { TimelineContent } from "@/components/ui/timeline-animation";
 import { VerticalCutReveal } from "@/components/ui/vertical-cut-reveal";
 import { PLANS, PRICING_COPY } from "@/lib/content";
 import { cn, formatBRL } from "@/lib/utils";
-import { Check } from "lucide-react";
 import { useRef } from "react";
 
 const FEATURED_PLAN_ID = "interiores";
@@ -112,7 +111,11 @@ export default function PricingSection2() {
                         {plan.title}
                       </h3>
                       {featured && (
-                        <span className="shrink-0 rounded-full border border-cream/25 px-2 py-1 text-[10px] uppercase tracking-[0.16em] text-cream/80">
+                        <span className="popular-badge-glow inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em]">
+                          <span
+                            className="presentation-marker presentation-marker--glow shrink-0"
+                            aria-hidden
+                          />
                           Popular
                         </span>
                       )}
@@ -166,19 +169,16 @@ export default function PricingSection2() {
                         <li
                           key={`${plan.id}-${itemIndex}`}
                           className={cn(
-                            "flex items-start gap-2 text-xs leading-relaxed sm:text-sm",
+                            "flex gap-2 text-xs leading-relaxed sm:text-sm",
                             featured ? "text-cream" : "text-ink/85",
                           )}
                         >
-                          <Check
-                            size={14}
-                            className={cn(
-                              "mt-0.5 shrink-0",
-                              featured ? "text-cream" : "text-brand",
-                            )}
+                          <span
+                            className="presentation-marker presentation-marker--glow mt-[0.35rem] shrink-0"
+                            style={{ animationDelay: `${itemIndex * 0.45}s` }}
                             aria-hidden
                           />
-                          <span>{item}</span>
+                          <span className="min-w-0 flex-1">{item}</span>
                         </li>
                       ))}
                     </ul>

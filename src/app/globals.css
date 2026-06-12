@@ -265,6 +265,113 @@ body {
   animation: presentation-marker-glow 2.6s ease-in-out infinite;
 }
 
+@keyframes popular-badge-glow {
+  0%,
+  100% {
+    border-color: hsl(38 78% 54% / 0.55);
+    color: hsl(38 85% 78%);
+    box-shadow:
+      0 0 8px hsl(38 90% 48% / 0.35),
+      inset 0 0 10px hsl(38 80% 52% / 0.08);
+    background: hsl(38 70% 50% / 0.12);
+  }
+  33% {
+    border-color: hsl(58 72% 50% / 0.65);
+    color: hsl(58 80% 80%);
+    box-shadow:
+      0 0 10px hsl(58 95% 46% / 0.45),
+      inset 0 0 12px hsl(48 85% 50% / 0.1);
+    background: hsl(58 65% 48% / 0.14);
+  }
+  66% {
+    border-color: hsl(88 58% 48% / 0.6);
+    color: hsl(88 55% 78%);
+    box-shadow:
+      0 0 10px hsl(88 80% 44% / 0.4),
+      inset 0 0 10px hsl(68 75% 48% / 0.1);
+    background: hsl(88 50% 45% / 0.13);
+  }
+}
+
+.popular-badge-glow {
+  animation: popular-badge-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes celebration-emoji-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+.celebration-emoji-pulse {
+  animation: celebration-emoji-pulse 1.35s ease-in-out infinite;
+}
+
+.presentation-agni-portrait {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 90%,
+    rgb(0 0 0 / 0.45) 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 90%,
+    rgb(0 0 0 / 0.45) 95%,
+    transparent 100%
+  );
+}
+
+.presentation-agni-bottom-fade {
+  pointer-events: none;
+  position: absolute;
+  z-index: 15;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  min-height: 10rem;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-cream) 78%, transparent) 0%,
+    color-mix(in srgb, var(--color-cream) 92%, transparent) 16%,
+    color-mix(in srgb, var(--color-cream) 98%, transparent) 26%,
+    var(--color-cream) 36%,
+    var(--color-cream) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 3%,
+    rgb(0 0 0 / 0.22) 9%,
+    rgb(0 0 0 / 0.58) 15%,
+    rgb(0 0 0 / 0.88) 21%,
+    black 28%,
+    black 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 3%,
+    rgb(0 0 0 / 0.22) 9%,
+    rgb(0 0 0 / 0.58) 15%,
+    rgb(0 0 0 / 0.88) 21%,
+    black 28%,
+    black 100%
+  );
+}
+
+.presentation-section-foreground {
+  position: relative;
+  z-index: 20;
+}
+
 .presentation-typewriter-cursor {
   animation: presentation-typewriter-blink 0.9s step-end infinite;
 }
@@ -274,6 +381,18 @@ body {
     animation: none;
     opacity: 1;
     background: hsl(38 70% 50%);
+  }
+
+  .popular-badge-glow {
+    animation: none;
+    border-color: hsl(38 70% 50% / 0.55);
+    color: hsl(38 85% 78%);
+    background: hsl(38 70% 50% / 0.12);
+    box-shadow: 0 0 8px hsl(38 90% 48% / 0.35);
+  }
+
+  .celebration-emoji-pulse {
+    animation: none;
   }
 
   .presentation-typewriter-cursor {
