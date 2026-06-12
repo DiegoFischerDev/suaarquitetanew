@@ -57,7 +57,7 @@ export default function PricingSection2() {
                 delay: 0,
               }}
             >
-              Adquira seu projeto com 50% de desconto!
+              Escolha o Serviço Ideal Para o Seu Projeto
             </VerticalCutReveal>
           </h2>
 
