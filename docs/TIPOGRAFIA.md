@@ -11,7 +11,7 @@ Escala tipográfica e regras de uso do par **Cinzel + Josefin Sans**.
 | Display | Cinzel | `--font-display` / `.heading-display` | Títulos, hero, frases editoriais |
 | Body | Josefin Sans | `--font-body` | Parágrafos, labels, UI, navegação |
 
-**Não usar:** Inter, Roboto, system-ui como display.
+**Não usar:** Inter, Roboto, system-ui como display
 
 ---
 
