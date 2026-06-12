@@ -5,6 +5,7 @@ export const HERO = {
   visualTitle: "Sua Arquiteta",
   visualSubtitle: "Projetamos espaços modernos e eficientes",
   h1: "Arquiteta a preço popular em Recife",
+  h2: "Você Acaba De Encontrar A Sua Arquiteta!",
   h3: "Projetamos espaços modernos e eficientes",
   projectTypes: ["Residenciais", "Comerciais"] as const,
 };
