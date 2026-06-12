@@ -64,9 +64,12 @@ jobs:
             tar -xzf /tmp/release.tar.gz -C "${DEPLOY_PATH}"
             rm -f /tmp/release.tar.gz
             cd "${DEPLOY_PATH}"
+            APP_PORT="${{ secrets.VPS_APP_PORT }}"
+            if [ -z "${APP_PORT}" ]; then APP_PORT="3010"; fi
+            sed -i "s/PORT: [0-9]\\+/PORT: ${APP_PORT}/" ecosystem.config.cjs
             if pm2 describe suaarquiteta >/dev/null 2>&1; then
-              pm2 reload ecosystem.config.cjs --update-env
+              pm2 reload ecosystem.config.cjs --only suaarquiteta --update-env
             else
-              pm2 start ecosystem.config.cjs
+              pm2 start ecosystem.config.cjs --only suaarquiteta
             fi
             pm2 save
