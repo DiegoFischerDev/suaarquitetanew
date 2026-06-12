@@ -76,6 +76,21 @@ export const SERVICES = [
   },
 ] as const;
 
+export const EDITORIAL_STATEMENT = {
+  quote:
+    "O que mais me encanta na arquitetura é saber que um bom projeto não transforma apenas um espaço. Ele transforma a experiência de quem o vive, todos os dias, durante muitos anos.",
+  attribution: "Agni Garcia",
+  role: "Sua Arquiteta",
+  image: "/assets/images/Projetos/32.webp",
+  imageAlt:
+    "Projeto de design de interiores desenvolvido pela arquiteta Agni Garcia em Recife",
+} as const;
+
+export const PRICING_COPY = {
+  subtitle:
+    "Vamos conversar sobre o seu espaço — sem compromisso, com atenção de verdade.",
+} as const;
+
 export const ABOUT = {
   heading: "Conheça Sua Arquiteta",
   introHeading: "Olá, Meu Nome é Agni Garcia, Sua Arquiteta",
@@ -86,10 +101,12 @@ export const ABOUT = {
     "Gestão de Patrimônio Histórico",
     "Design de Interiores",
   ],
+  highlights: [
+    "Centenas de projetos realizados",
+    "100% de feedbacks positivos",
+  ] as const,
   bio: [
-    "Sou arquiteta e designer de interiores há mais de 8 anos, com base em Recife, porém ofereço projetos para todo o território nacional. Sempre sonhei em democratizar a arquitetura, por isso busco oferecer planos a preços populares.",
-    "Eu sei o quanto um ambiente bonito e bem planejado impacta no dia a dia e bem-estar das pessoas, por isso nosso atendimento é humanizado e personalizado para atender as necessidades específicas de cada cliente.",
-    "Hoje conto com uma equipe de talentosos profissionais que me apoiam nessa missão, desde mestres de obra, marceneiros, eletricistas, advogados e equipe de marketing para proporcionar maior número de soluções para nossos clientes.",
+    "Sou pernambucana, arquiteta e designer de interiores. Há mais de 8 anos ajudo famílias e profissionais a criarem espaços que unem beleza, funcionalidade e bem-estar, atendendo clientes em todo o Brasil.",
   ],
 };
 
@@ -130,7 +147,7 @@ export const PLANS = [
       "PLANTA DE FORRO DE GESSO",
       "DETALHAMENTOS DO MOBILIÁRIO",
     ],
-    cta: "Saiba mais",
+    cta: "Quero conversar",
     whatsapp: WHATSAPP_LINKS.interiores,
   },
   {
@@ -174,28 +191,28 @@ export const TESTIMONIALS = [
     name: "Vanessa Alves",
     service: "Móveis planejados",
     text: "Me chamo Vanessa Alves. Moro na cidade de São Paulo e contratei a arquiteta Agni Garcia de forma on line para fazer um projeto de um closet para mim. Gente, fiquei bem surpresa com o resultado. A Agni conseguiu entender perfeitamente as minhas necessidades. Ela é super moderna e o projeto ficou incrível e muito lindo. Eu pude ver como iria ficar antes mesmo de ficar pronto. Nossa, eu AMEI demais. Gratidão!",
-    image: "/assets/images/Vanessa-Alves.jpg",
+    image: "/assets/images/Vanessa-Alves.webp",
     alt: "Foto de Vanessa Alves, cliente da Sua Arquiteta",
   },
   {
     name: "Eduardo",
     service: "Restaurante",
     text: "Me chamo Eduardo, sou proprietário do restaurante pé de canela. Agni é uma profissional maravilhosa. Desde o começo sempre atenciosa. Acompanhou a obra, entregou o projeto todo em 3d, acompanhou a documentação. legislação se preocupou com acessibilidade. a principal qualidade foi o acompanhamento da obra, não deixou nada a desejar. Pode confiar que o trabalho. Profissional nota 10! Super indico!",
-    image: "/assets/images/Eduardo-Caravalho.jpg",
+    image: "/assets/images/Eduardo-Caravalho.webp",
     alt: "Foto de Eduardo Carvalho, cliente da Sua Arquiteta",
   },
   {
     name: "Fabiano Pinheiro",
     service: "Quiosque Shopping",
     text: "Fiz o meu projeto de quiosque para colocar no shopping com Agni. Uma profissional espetacular. O resultado final foi fantástico. Preço bom e prazo cumprido como acordado.",
-    image: "/assets/images/Fabiano-Pinheiro.jpg",
+    image: "/assets/images/Fabiano-Pinheiro.webp",
     alt: "Foto de Fabiano Pinheiro, cliente da Sua Arquiteta",
   },
   {
     name: "Paulo Cunha",
     service: "Memorial Descritivo",
     text: "Contratei a Agni para realizar um memorial descritivo com laudo de acústica para a nossa empresa de fabricação de tintas. Desde o primeiro momento se mostrou muito profissional e entregou o documento no prazo estipulado por ela. Nos deu suporte no decorrer de todo o processo de tramitação na prefeitura.",
-    image: "/assets/images/Paulo-Cunha.jpg",
+    image: "/assets/images/Paulo-Cunha.webp",
     alt: "Foto de Paulo Cunha, cliente da Sua Arquiteta",
   },
 ] as const;
@@ -243,61 +260,76 @@ export const FAQ = [
   },
 ] as const;
 
-const BEFORE_IMAGE = "/assets/images/antes-depois/antes-01.png";
-const AFTER_IMAGE = "/assets/images/antes-depois/depois-01.png";
+const CHAMPAGNAT_PLANTA =
+  "/assets/images/Projetos/ginasio-champagnat-planta.webp";
+const CHAMPAGNAT_INTERIOR =
+  "/assets/images/Projetos/ginasio-champagnat-interior.webp";
+const CHAMPAGNAT_FACHADA =
+  "/assets/images/Projetos/ginasio-champagnat-fachada.webp";
 
 export const BEFORE_AFTER_PROJECTS = [
   {
     id: "ginasio-champagnat-1",
-    before: BEFORE_IMAGE,
-    after: AFTER_IMAGE,
+    before: CHAMPAGNAT_PLANTA,
+    after: CHAMPAGNAT_INTERIOR,
     beforeAlt:
-      "Ginásio de Esportes Champagnat antes do projeto de arquitetura — Sua Arquiteta Recife",
+      "Planta do Ginásio de Esportes Champagnat — projeto arquitetônico Sua Arquiteta Recife",
     afterAlt:
-      "Ginásio de Esportes Champagnat após projeto de arquitetura — Sua Arquiteta Agni Garcia",
+      "Interior em 3D do Ginásio de Esportes Champagnat — Sua Arquiteta Agni Garcia",
   },
   {
     id: "ginasio-champagnat-2",
-    before: BEFORE_IMAGE,
-    after: AFTER_IMAGE,
+    before: CHAMPAGNAT_INTERIOR,
+    after: CHAMPAGNAT_FACHADA,
     beforeAlt:
-      "Fachada do ginásio antes da reforma arquitetônica em Recife — Sua Arquiteta",
+      "Render 3D do interior do Ginásio de Esportes Champagnat — Sua Arquiteta",
     afterAlt:
-      "Fachada do ginásio após a reforma arquitetônica em Recife — Sua Arquiteta",
+      "Fachada do Ginásio de Esportes Champagnat após o projeto arquitetônico — Sua Arquiteta",
   },
   {
     id: "ginasio-champagnat-3",
-    before: BEFORE_IMAGE,
-    after: AFTER_IMAGE,
+    before: CHAMPAGNAT_PLANTA,
+    after: CHAMPAGNAT_FACHADA,
     beforeAlt:
-      "Área externa do projeto antes do design de interiores e arquitetura — Sua Arquiteta",
+      "Planta do Ginásio de Esportes Champagnat — projeto comercial em Recife — Sua Arquiteta",
     afterAlt:
-      "Área externa do projeto após o design de interiores e arquitetura — Sua Arquiteta",
+      "Fachada executada do Ginásio de Esportes Champagnat — Sua Arquiteta Agni Garcia",
   },
 ] as const;
 
 const PROJECT_FILES = [
-  "1.jpeg",
-  "5.jpeg",
-  "6.jpeg",
-  "11.jpeg",
-  "15.jpeg",
-  "17.jpeg",
-  "32.jpeg",
-  "37.jpeg",
-  "56.jpeg",
-  "59.jpeg",
-  "62.jpeg",
-  "72.jpeg",
-  "76.jpeg",
-  "78.jpeg",
-  "85.jpeg",
-  "88.jpeg",
+  "ginasio-champagnat-interior.webp",
+  "ginasio-champagnat-fachada.webp",
+  "1.webp",
+  "5.webp",
+  "6.webp",
+  "11.webp",
+  "15.webp",
+  "17.webp",
+  "32.webp",
+  "37.webp",
+  "56.webp",
+  "59.webp",
+  "62.webp",
+  "72.webp",
+  "76.webp",
+  "78.webp",
+  "85.webp",
+  "88.webp",
 ] as const;
+
+const PROJECT_ALT_BY_FILE: Partial<Record<(typeof PROJECT_FILES)[number], string>> = {
+  "ginasio-champagnat-interior.webp":
+    "Render 3D do interior do Ginásio de Esportes Champagnat — Sua Arquiteta Recife",
+  "ginasio-champagnat-fachada.webp":
+    "Fachada do Ginásio de Esportes Champagnat — projeto arquitetônico em Recife — Sua Arquiteta",
+};
 
 export const PROJECT_GALLERY = PROJECT_FILES.map((file, index) => ({
   src: `/assets/images/Projetos/${file}`,
-  alt: `Projeto de arquitetura ${index + 1 <= 8 ? "comercial" : "residencial"} em Recife — Sua Arquiteta Agni Garcia`,
+  alt:
+    PROJECT_ALT_BY_FILE[file] ??
+    `Projeto de arquitetura ${index + 1 <= 8 ? "comercial" : "residencial"} em Recife — Sua Arquiteta Agni Garcia`,
 }));
 
 /** @deprecated Use PROJECT_GALLERY */

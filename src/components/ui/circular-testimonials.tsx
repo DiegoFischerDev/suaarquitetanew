@@ -281,6 +281,8 @@ export const CircularTestimonials = forwardRef<
               className="absolute h-full w-full rounded-3xl object-cover shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
               data-index={index}
               style={getImageStyle(index)}
+              loading="lazy"
+              decoding="async"
               draggable={false}
             />
           ))}

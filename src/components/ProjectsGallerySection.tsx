@@ -3,7 +3,11 @@ import { StickyScrollGallery } from "@/components/ui/sticky-scroll-gallery";
 
 export function ProjectsGallerySection() {
   return (
-    <section id="section_projects" className="bg-cream">
+    <section
+      id="section_projects"
+      className="bg-cream-dark/40"
+      aria-labelledby="heading-gallery"
+    >
       <StickyScrollGallery
         images={PROJECT_GALLERY}
         introTitle="Galeria de projetos"

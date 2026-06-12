@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useHeroReveal } from "./HeroRevealContext";
 
 export function Navigation() {
-  const { revealComplete } = useHeroReveal();
+  const { revealComplete, scrollToHeroFullReveal } = useHeroReveal();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -46,7 +46,14 @@ export function Navigation() {
       </a>
 
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10">
-        <Link href="#section_one" className="relative z-10 flex items-center gap-3">
+        <Link
+          href="#hero-after-complete"
+          className="relative z-10 flex items-center gap-3"
+          onClick={(event) => {
+            event.preventDefault();
+            scrollToHeroFullReveal();
+          }}
+        >
           <Image
             src="/assets/images/logo_agni_white.png"
             alt="Logo Sua Arquiteta - Agni Garcia Arquitetura"
@@ -67,7 +74,7 @@ export function Navigation() {
             <a
               key={link.href}
               href={link.href}
-              className={`cursor-pointer text-sm tracking-wide transition-colors duration-300 hover:text-brand ${
+              className={`cursor-pointer rounded-sm text-sm tracking-wide transition-colors duration-300 hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
                 showSolidNav ? "text-ink/80" : "text-cream/90"
               }`}
             >
@@ -87,7 +94,7 @@ export function Navigation() {
         <button
           type="button"
           aria-label={open ? "Fechar menu" : "Abrir menu"}
-          className={`relative z-10 cursor-pointer rounded-full p-2 transition-colors lg:hidden ${
+          className={`relative z-10 cursor-pointer rounded-full p-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand lg:hidden ${
             showSolidNav ? "text-ink" : "text-cream"
           }`}
           onClick={() => setOpen((value) => !value)}
@@ -103,7 +110,7 @@ export function Navigation() {
               <a
                 key={link.href}
                 href={link.href}
-                className="cursor-pointer text-base text-ink/85"
+                className="cursor-pointer rounded-sm text-base text-ink/85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                 onClick={() => setOpen(false)}
               >
                 {link.label}

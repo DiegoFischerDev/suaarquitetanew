@@ -1,13 +1,40 @@
-import { FaqSection } from "@/components/FaqSection";
-import { Footer } from "@/components/Footer";
+import { EditorialStatementSection } from "@/components/EditorialStatementSection";
 import { HomeShell } from "@/components/HomeShell";
 import { Navigation } from "@/components/Navigation";
 import { PresentationSection } from "@/components/PresentationSection";
-import { ProjectsGallerySection } from "@/components/ProjectsGallerySection";
-import { PricingSection } from "@/components/PricingSection";
 import { ScrollVideoHero } from "@/components/ScrollVideoHero";
 import { SeoHeroText } from "@/components/SeoHeroText";
-import { TestimonialsSection } from "@/components/TestimonialsSection";
+import dynamic from "next/dynamic";
+
+const PricingSection = dynamic(() =>
+  import("@/components/PricingSection").then((mod) => ({
+    default: mod.PricingSection,
+  })),
+);
+
+const TestimonialsSection = dynamic(() =>
+  import("@/components/TestimonialsSection").then((mod) => ({
+    default: mod.TestimonialsSection,
+  })),
+);
+
+const ProjectsGallerySection = dynamic(() =>
+  import("@/components/ProjectsGallerySection").then((mod) => ({
+    default: mod.ProjectsGallerySection,
+  })),
+);
+
+const FaqSection = dynamic(() =>
+  import("@/components/FaqSection").then((mod) => ({
+    default: mod.FaqSection,
+  })),
+);
+
+const Footer = dynamic(() =>
+  import("@/components/Footer").then((mod) => ({
+    default: mod.Footer,
+  })),
+);
 
 export default function HomePage() {
   return (
@@ -17,12 +44,23 @@ export default function HomePage() {
         <ScrollVideoHero />
         <SeoHeroText />
         <PresentationSection />
-        <PricingSection />
-        <TestimonialsSection />
-        <ProjectsGallerySection />
-        <FaqSection />
+        <EditorialStatementSection />
+        <div className="below-fold-section">
+          <PricingSection />
+        </div>
+        <div className="below-fold-section">
+          <TestimonialsSection />
+        </div>
+        <div className="below-fold-section">
+          <ProjectsGallerySection />
+        </div>
+        <div className="below-fold-section">
+          <FaqSection />
+        </div>
       </main>
-      <Footer />
+      <div className="below-fold-section">
+        <Footer />
+      </div>
     </HomeShell>
   );
 }

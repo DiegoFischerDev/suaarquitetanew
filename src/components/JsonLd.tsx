@@ -1,7 +1,38 @@
 import { FAQ } from "@/lib/content";
-import { SITE_URL } from "@/lib/site";
+import { NAV_LINKS, SITE_URL } from "@/lib/site";
 
 export function JsonLd() {
+  const website = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: SITE_URL,
+    name: "Sua Arquiteta - Agni Garcia Arquitetura",
+    description:
+      "Arquitetura e design de interiores em Recife. Projetos presenciais ou remotos para todo o Brasil.",
+    inLanguage: "pt-BR",
+    publisher: { "@id": `${SITE_URL}/#business` },
+  };
+
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Início",
+        item: SITE_URL,
+      },
+      ...NAV_LINKS.map((link, index) => ({
+        "@type": "ListItem",
+        position: index + 2,
+        name: link.label,
+        item: `${SITE_URL}${link.href}`,
+      })),
+    ],
+  };
+
   const professionalService = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -38,6 +69,8 @@ export function JsonLd() {
     image: `${SITE_URL}/assets/images/expert.png`,
     description:
       "Arquiteta e designer de interiores com base em Recife, oferecendo projetos para todo o território nacional.",
+    worksFor: { "@id": `${SITE_URL}/#business` },
+    url: SITE_URL,
   };
 
   const faqPage = {
@@ -55,6 +88,14 @@ export function JsonLd() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalService) }}

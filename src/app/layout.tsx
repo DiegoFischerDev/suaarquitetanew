@@ -34,7 +34,6 @@ export const metadata: Metadata = {
     title: "Sua Arquiteta Recife",
     description:
       "Conheça Sua Arquiteta Agni Garcia. Projetos presenciais em Recife ou remoto para qualquer cidade do Brasil.",
-    images: [`${SITE_URL}/assets/images/bg_section_one.jpg`],
     locale: "pt_BR",
   },
   twitter: {
@@ -42,7 +41,6 @@ export const metadata: Metadata = {
     title: "Sua Arquiteta Recife",
     description:
       "Conheça Sua Arquiteta Agni Garcia. Projetos presenciais em Recife ou remoto para qualquer cidade do Brasil.",
-    images: [`${SITE_URL}/assets/images/bg_section_one.jpg`],
   },
   icons: {
     icon: [
@@ -67,15 +65,38 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#3D3834" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/images/imagem-final-mobile.webp"
+          type="image/webp"
+          fetchPriority="high"
+          media="(max-width: 1023px)"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/images/imagem-inicial-mobile.webp"
+          type="image/webp"
+          media="(max-width: 1023px)"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/images/imagem-inicial.webp"
+          type="image/webp"
+          fetchPriority="high"
+          media="(min-width: 1024px)"
+        />
         <JsonLd />
       </head>
       <body className="antialiased">
         {children}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-Y9F57S1NXE"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

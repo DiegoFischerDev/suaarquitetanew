@@ -105,7 +105,7 @@ function FooterLink({
         target="_blank"
         rel="noopener noreferrer"
         className={cn(
-          "cursor-pointer font-medium text-muted transition-colors hover:text-ink",
+          "cursor-pointer rounded-sm font-medium text-muted transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
           className,
         )}
       >
@@ -119,7 +119,7 @@ function FooterLink({
       <a
         href={href}
         className={cn(
-          "cursor-pointer font-medium text-muted transition-colors hover:text-ink",
+          "cursor-pointer rounded-sm font-medium text-muted transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
           className,
         )}
       >
@@ -132,7 +132,7 @@ function FooterLink({
     <Link
       href={href}
       className={cn(
-        "cursor-pointer font-medium text-muted transition-colors hover:text-ink",
+        "cursor-pointer rounded-sm font-medium text-muted transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
         className,
       )}
     >
@@ -240,7 +240,7 @@ export function FooterTapedDesign() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Falar com a Agni no WhatsApp"
-              className="cursor-pointer text-brand transition-colors hover:text-brand-light"
+              className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-brand transition-colors hover:text-brand-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
               <WhatsAppIcon className="h-5 w-5" />
             </a>
@@ -249,14 +249,14 @@ export function FooterTapedDesign() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram da Sua Arquiteta"
-              className="cursor-pointer text-brand transition-colors hover:text-brand-light"
+              className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-brand transition-colors hover:text-brand-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
               <InstagramIcon className="h-5 w-5" />
             </a>
             <a
               href="mailto:contato@suaarquiteta.com.br"
               aria-label="Enviar e-mail para contato@suaarquiteta.com.br"
-              className="cursor-pointer text-brand transition-colors hover:text-brand-light"
+              className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-brand transition-colors hover:text-brand-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
               <Mail className="h-5 w-5" aria-hidden />
             </a>

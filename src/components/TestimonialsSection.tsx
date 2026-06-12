@@ -1,65 +1,37 @@
-"use client";
-
-import {
-  CircularTestimonials,
-  TestimonialNavButtons,
-  type CircularTestimonialsHandle,
-} from "@/components/ui/circular-testimonials";
+import { TestimonialsSeoArchive } from "@/components/TestimonialsSeoArchive";
+import { TestimonialSlider } from "@/components/ui/testimonial-slider";
 import { TESTIMONIALS } from "@/lib/content";
-import { useRef } from "react";
-import { Reveal } from "./Reveal";
 
 const testimonials = TESTIMONIALS.map((item) => ({
+  image: item.image,
   quote: item.text,
   name: item.name,
-  designation: item.service,
-  src: item.image,
+  role: item.service,
+  rating: 5,
 }));
 
-const testimonialColors = {
-  name: "#1a1814",
-  designation: "#6b6560",
-  testimony: "#3d3834",
-  arrowBackground: "#3d3834",
-  arrowForeground: "#f9f8f3",
-  arrowHoverBackground: "#5c554f",
-};
-
 export function TestimonialsSection() {
-  const carouselRef = useRef<CircularTestimonialsHandle>(null);
-
   return (
-    <section id="section_seven" className="section-pad bg-cream-dark/40">
+    <section
+      id="section_seven"
+      className="section-pad bg-cream"
+      aria-labelledby="heading-testimonials"
+    >
       <div className="mx-auto max-w-7xl">
-        <Reveal>
-          <p className="eyebrow mb-3 text-center">Depoimentos</p>
-          <h2 className="heading-display text-center text-3xl font-medium text-ink md:text-5xl">
+        <div className="mx-auto mb-10 max-w-2xl text-center md:mb-14">
+          <h2
+            id="heading-testimonials"
+            className="heading-display text-3xl font-medium text-ink md:text-5xl"
+          >
             O Que Dizem os Clientes
           </h2>
-          <TestimonialNavButtons
-            className="mt-6 flex justify-center gap-6 md:hidden"
-            colors={testimonialColors}
-            onPrev={() => carouselRef.current?.goPrev()}
-            onNext={() => carouselRef.current?.goNext()}
-          />
-        </Reveal>
+          <p className="mt-3 text-sm leading-relaxed text-muted md:text-base">
+            Histórias reais de quem transformou o espaço com a Agni
+          </p>
+        </div>
 
-        <Reveal delay={0.1}>
-          <div className="mx-auto mt-10 flex justify-center md:mt-14">
-            <CircularTestimonials
-              ref={carouselRef}
-              testimonials={testimonials}
-              autoplay
-              hideControlsOnMobile
-              colors={testimonialColors}
-              fontSizes={{
-                name: "1.5rem",
-                designation: "0.8rem",
-                quote: "1.05rem",
-              }}
-            />
-          </div>
-        </Reveal>
+        <TestimonialsSeoArchive testimonials={TESTIMONIALS} />
+        <TestimonialSlider testimonials={testimonials} autoplay />
       </div>
     </section>
   );

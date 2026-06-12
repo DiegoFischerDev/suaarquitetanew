@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import { VerticalCutReveal } from "@/components/ui/vertical-cut-reveal";
-import { PLANS } from "@/lib/content";
+import { PLANS, PRICING_COPY } from "@/lib/content";
 import { formatBRL } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { useRef } from "react";
@@ -33,6 +33,7 @@ export default function PricingSection2() {
     <section
       id="section_five"
       className="relative w-full section-pad bg-cream"
+      aria-labelledby="heading-pricing"
       ref={pricingRef}
     >
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--color-ink)_8%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--color-ink)_8%,transparent)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_40%_50%_at_50%_50%,#000_70%,transparent_110%)]" />
@@ -40,7 +41,10 @@ export default function PricingSection2() {
       <div className="relative mx-auto max-w-7xl">
         <article className="mb-12 text-center">
           <p className="eyebrow mb-3">Planos e valores</p>
-          <h2 className="heading-display text-3xl font-medium text-ink md:text-5xl">
+          <h2
+            id="heading-pricing"
+            className="heading-display text-3xl font-medium text-ink md:text-5xl"
+          >
             <VerticalCutReveal
               splitBy="words"
               staggerDuration={0.12}
@@ -65,7 +69,7 @@ export default function PricingSection2() {
             customVariants={revealVariants}
             className="mt-4 text-sm text-muted"
           >
-            Ofertas por tempo limitado — consulte valores pelo WhatsApp
+            {PRICING_COPY.subtitle}
           </TimelineContent>
         </article>
 
@@ -80,7 +84,7 @@ export default function PricingSection2() {
                 animationNum={index + 1}
                 timelineRef={pricingRef}
                 customVariants={revealVariants}
-                className="h-full"
+                className={`h-full ${featured ? "order-first md:order-none" : ""}`}
               >
                 <Card
                   className={`flex h-full flex-col p-0 ${

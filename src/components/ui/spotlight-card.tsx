@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 
-type GlowColor = "blue" | "purple" | "green" | "red" | "orange";
+type GlowColor = "blue" | "purple" | "green" | "red" | "orange" | "sand";
 
 interface GlowCardProps {
   children: ReactNode;
@@ -26,6 +26,7 @@ const glowColorMap: Record<GlowColor, { base: number; spread: number }> = {
   green: { base: 120, spread: 200 },
   red: { base: 0, spread: 200 },
   orange: { base: 30, spread: 200 },
+  sand: { base: 38, spread: 110 },
 };
 
 const sizeMap = {
